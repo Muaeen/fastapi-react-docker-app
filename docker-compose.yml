@@ -4,7 +4,7 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8020:8000"
+      - "8010:8000"
     volumes:
       - ./backend:/app
 
@@ -17,7 +17,7 @@ services:
       - /app/node_modules
       - frontend_cache:/app/.cache
     environment:
-      - REACT_APP_API_URL=http://localhost:8020
+      - REACT_APP_API_URL=http://localhost:8010
       - CHOKIDAR_USEPOLLING=true
     depends_on:
       - backend
