@@ -21,8 +21,8 @@ docker-compose up --build
 ```
 
 This will start:
-- Frontend on http://localhost:3000
-- Backend on http://localhost:8000
+- Frontend on http://localhost:3030
+- Backend on http://localhost:8020
 
 ## Production Setup
 
@@ -30,13 +30,13 @@ To build and run the production version:
 
 ```bash
 docker build -t fastapi-react-app .
-docker run -p 8000:8000 -p 3000:3000 fastapi-react-app
+docker run -p 8020:8000 -p 3030:3000 fastapi-react-app
 ```
 
 ## Environment Variables
 
 ### Frontend
-- `REACT_APP_API_URL`: Backend API URL (default: http://localhost:8000)
+- `REACT_APP_API_URL`: Backend API URL (default: http://localhost:8020)
 
 ## Features
 
