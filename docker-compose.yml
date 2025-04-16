@@ -13,9 +13,14 @@ services:
     ports:
       - "3030:3000"
     volumes:
-      - ./frontend:/app
+      - ./frontend:/app:delegated
       - /app/node_modules
+      - frontend_cache:/app/.cache
     environment:
       - REACT_APP_API_URL=http://localhost:8020
+      - CHOKIDAR_USEPOLLING=true
     depends_on:
       - backend
+
+volumes:
+  frontend_cache:
