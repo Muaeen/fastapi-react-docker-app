@@ -38,7 +38,8 @@ COPY --from=backend-build /app /app
 RUN mkdir -p /app/static
 
 # Copy built frontend files to backend static directory
-COPY --from=frontend-build /frontend/build/ /app/static/
+COPY --from=frontend-build /frontend/build/* /app/static/
+COPY --from=frontend-build /frontend/build/static /app/static/static/
 
 # Install debugging tools
 RUN apt-get update && apt-get install -y curl net-tools && apt-get clean

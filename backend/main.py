@@ -38,7 +38,14 @@ else:
     except Exception as e:
         logger.error(f"Failed to create static directory: {e}")
 
-# Root path handler - serve the React frontend instead of API
+# Mount static files from the static subdirectory
+try:
+    app.mount("/static", StaticFiles(directory=os.path.join(static_dir, "static")), name="static")
+    logger.info("Successfully mounted static files directory")
+except Exception as e:
+    logger.error(f"Failed to mount static files directory: {e}")
+
+# Root path handler - serve the React frontend
 @app.get("/")
 async def root(request: Request):
     logger.info("Root path requested, serving frontend index.html")
@@ -51,7 +58,7 @@ async def root(request: Request):
         logger.error(f"index.html not found at {index_path}")
         return {"error": "Frontend not found. Please check deployment."}
 
-# API endpoints - moved under /api prefix
+# API endpoints
 @app.get("/api")
 def read_root():
     return {"message": "Welcome to FastAPI!"}
@@ -69,12 +76,8 @@ def read_items():
 def health_check():
     return {"status": "healthy"}
 
-# Mount static files
-try:
-    app.mount("/static", StaticFiles(directory=static_dir), name="static")
-    logger.info("Successfully mounted static files directory")
-except Exception as e:
-    logger.error(f"Failed to mount static files directory: {e}")
+# Serve static files and assets from root path
+app.mount("/", StaticFiles(directory=static_dir), name="root")
 
 # Catch-all route for serving the React app
 @app.get("/{full_path:path}")
